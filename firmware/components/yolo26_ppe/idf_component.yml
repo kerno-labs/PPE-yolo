@@ -1,0 +1,5 @@
+version: "0.1.0"
+description: "YOLO26n 3-class PPE detector wrapper for ESP-DL (NMS-free, INT8/INT16 hybrid)"
+dependencies:
+  espressif/esp-dl:
+    version: "^3.3.14"

@@ -1,0 +1,28 @@
+# Python & ML artifacts
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+ml/datasets/
+ml/runs/
+runs/
+ml/weights/*.pt
+ml/output/
+ml/results/
+*.onnx
+*.pt
+
+# ESP-IDF build & secret configs (NEVER commit Wi-Fi passwords or WeCom keys!)
+firmware/build/
+firmware/managed_components/
+firmware/dependencies.lock
+firmware/sdkconfig
+firmware/sdkconfig.old
+firmware/sdkconfig.local
+firmware/sdkconfig.secrets
+firmware/main/include/secrets_local.hpp
+
+# Keep exported deployment model & generated voice asset tracked or ignored?
+# Track voice asset; ignore large temp info/json from esp-ppq
+*.info
+*.espdl.json

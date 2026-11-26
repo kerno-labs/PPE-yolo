@@ -1,0 +1,6 @@
+# M5Stack CoreS3 16MB Flash Partition Table (CONFIG_PARTITION_TABLE_OFFSET=0x9000)
+# Name,   Type, SubType,  Offset,    Size,      Flags
+nvs,      data, nvs,      0xA000,    0x5000,
+phy_init, data, phy,      0xF000,    0x1000,
+factory,  app,  factory,  0x10000,   0xA00000,
+storage,  data, spiffs,   0xA10000,  0x5F0000,

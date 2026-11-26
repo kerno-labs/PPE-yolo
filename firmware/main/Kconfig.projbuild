@@ -1,0 +1,83 @@
+menu "PPE Helmet Monitor (CoreS3 + YOLO26)"
+
+    menu "Network & Enterprise WeChat (WeCom)"
+        config PPE_WIFI_SSID
+            string "Wi-Fi SSID"
+            default ""
+            help
+                2.4GHz Wi-Fi network SSID for sending Enterprise WeChat alerts.
+                Leave empty to run purely offline with local screen & voice alerts.
+
+        config PPE_WIFI_PASSWORD
+            string "Wi-Fi Password"
+            default ""
+            help
+                Wi-Fi password (WPA2/WPA3).
+
+        config PPE_WECOM_WEBHOOK_URL
+            string "WeCom Group Robot Webhook URL"
+            default ""
+            help
+                Full Enterprise WeChat webhook URL, e.g.
+                https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=YOUR_BOT_KEY
+
+        config PPE_DEVICE_ID
+            string "Device Identifier"
+            default "CoreS3-PPE-01"
+            help
+                Device name displayed in Enterprise WeChat alert messages.
+    endmenu
+
+    menu "Detection & Alert Rules"
+        config PPE_CONF_THRESH_PCT
+            int "Detection Confidence Threshold (%)"
+            range 15 95
+            default 40
+            help
+                Minimum confidence score percentage (e.g. 40 means 0.40) for YOLO26n detections.
+
+        config PPE_PERSON_FALLBACK_ENABLE
+            bool "Enable Person-Without-Helmet Fallback Rule"
+            default y
+            help
+                In addition to direct `no_helmet` detections, flag a detected `person`
+                whose head region has no matching `helmet` (skipping top-edge cropped bodies).
+
+        config PPE_DEBOUNCE_FRAMES
+            int "Consecutive Violation Frames for Confirmed Alert"
+            range 1 10
+            default 1
+            help
+                Number of consecutive violation frames required to trigger confirmed voice + WeCom alert.
+                Set to 1 for immediate alert on first detection; set >= 2 to enable Stage 1 local warning first.
+
+        config PPE_WECOM_COOLDOWN_SEC
+            int "WeCom Alert Cooldown (seconds)"
+            range 5 600
+            default 30
+            help
+                Minimum interval between consecutive Enterprise WeChat alert pushes.
+
+        config PPE_VOICE_COOLDOWN_SEC
+            int "Local Voice Repeat Cooldown (seconds)"
+            range 4 60
+            default 8
+            help
+                Minimum interval between repeated Chinese voice announcements while violation persists.
+
+        config PPE_SPEAKER_VOLUME
+            int "Speaker Output Volume (0-100)"
+            range 0 100
+            default 85
+            help
+                AW88298 speaker volume level (0 = silent, 100 = max).
+
+        config PPE_JPEG_QUALITY
+            int "WeCom Snapshot JPEG Quality (30-95)"
+            range 30 95
+            default 75
+            help
+                JPEG quality for the 320x240 annotated violation snapshot sent to WeCom.
+    endmenu
+
+endmenu
